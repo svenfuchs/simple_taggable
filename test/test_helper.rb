@@ -20,6 +20,8 @@ FileUtils.touch(log) unless File.exists?(log)
 ActiveRecord::Base.logger = Logger.new(log)
 Rails::LogSubscriber.add(:active_record, ActiveRecord::Railties::LogSubscriber.new)
 
+DatabaseCleaner.strategy = :truncation
+
 class Test::Unit::TestCase
   def setup
     DatabaseCleaner.start
@@ -50,10 +52,10 @@ class Test::Unit::TestCase
   end
 end
 
-DatabaseCleaner.strategy = :truncation
-
 $:.unshift Pathname.local('../lib').to_s
+
 require 'simple_taggable'
 include SimpleTaggable
+
 require Pathname.local('models')
 require Pathname.local('helpers/assert_queries')

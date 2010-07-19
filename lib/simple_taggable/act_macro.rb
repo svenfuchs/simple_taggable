@@ -15,16 +15,6 @@ module SimpleTaggable
       alias_method_chain :reload, :tag_list
       
       default_scope :order => options[:order] || :id
-    
-      scope :with_all_tags, lambda { |tags|
-        inclusion = Tagging.select('count(*)').joins(:tag).with_tagged(self, tags)
-        where("(#{inclusion.to_sql}) = #{tags.size}")
-      }
-    
-      scope :without_tags, lambda { |tags|
-        exclusion = Tagging.select(:taggable_id).joins(:tag).with_tagged(self, tags)
-        where("#{table_name}.id NOT IN (#{exclusion.to_sql})")
-      }
     end
 
     def acts_as_taggable?

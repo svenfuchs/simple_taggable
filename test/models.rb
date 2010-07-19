@@ -6,41 +6,41 @@ ActiveRecord::Migration.verbose = false
 
 ActiveRecord::Schema.define :version => 0 do
   create_table :magazines, :force => true do |t|
-    t.column :name, :string
-    t.column :cached_tag_list, :string
+    t.string :name
+    t.string :cached_tag_list
   end
   
   create_table :posts, :force => true do |t|
-    t.column :name, :string
-    t.column :user_id, :integer
-    t.column :type, :string
-    t.column :cached_tag_list, :string
+    t.references :user
+    t.string :name
+    t.string :type
+    t.string :cached_tag_list
   end
   
   create_table :photos, :force => true do |t|
-    t.column :name, :string
-    t.column :user_id, :integer
-    t.column :cached_tag_list, :string
+    t.references :user
+    t.string :name
+    t.string :cached_tag_list
   end
   
   create_table :subscriptions, :force => true do |t|
-    t.column :user_id, :integer
-    t.column :magazine_id, :integer
+    t.references :user
+    t.references :magazine
   end
   
   create_table :tags, :force => true do |t|
-    t.column :name, :string
+    t.string :name
   end
   
   create_table :taggings, :force => true do |t|
-    t.column :tag_id, :integer
-    t.column :taggable_id, :integer
-    t.column :taggable_type, :string
-    t.column :created_at, :datetime
+    t.references :tag
+    t.references :taggable
+    t.string :taggable_type
+    t.timestamps :created_at, :datetime
   end
   
   create_table :users, :force => true do |t|
-    t.column :name, :string
+    t.string :name
   end
 end
 
