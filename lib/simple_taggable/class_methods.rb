@@ -4,7 +4,7 @@ module SimpleTaggable
     def tags(*args)
       options = args.extract_options!
       
-      tags = Tag.select("DISTINCT tags.*, count(*) AS count").with_taggings(self)
+      tags = Tag.select("DISTINCT tags.*, count(*) AS count").with_tagged_type(self)
       tags = tags.at_least(options[:at_least] || 1)
       tags = tags.at_most(options[:at_most]) if options[:at_most]
       tags = tags & current_scoped_methods if current_scoped_methods.where_values.present? # TODO ... urgs

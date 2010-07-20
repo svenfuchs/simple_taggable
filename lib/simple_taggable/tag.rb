@@ -11,11 +11,8 @@ module SimpleTaggable
     self.destroy_unused = true
 
     class << self
-      def with_taggings(type) # TODO ...
+      def with_tagged_type(type) # TODO ...
         joins(:taggings).joins("INNER JOIN #{type.table_name} ON taggings.taggable_id = #{type.table_name}.id AND taggings.taggable_type = '#{type.name}'")
-      end
-
-      def with_counts(options = {})
       end
 
       def find_or_create_named_like(name)

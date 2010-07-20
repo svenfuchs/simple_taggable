@@ -7,7 +7,11 @@ module SimpleTaggable
       extend SimpleTaggable::ClassMethods
 
       has_many :taggings, :as => :taggable, :dependent => :destroy, :include => :tag, :class_name => 'SimpleTaggable::Tagging'
-      has_many :tags, :through => :taggings, :class_name => 'SimpleTaggable::Tag', :source => :tag
+      has_many :tags, :through => :taggings, :class_name => 'SimpleTaggable::Tag', :source => :tag do
+        def with_counts(options = {})
+          # TODO
+        end
+      end
 
       before_save :cache_tag_list
       after_save :save_tags
