@@ -13,8 +13,11 @@ module SimpleTaggable
       after_save :save_tags
 
       alias_method_chain :reload, :tag_list
-      
+
       default_scope :order => options[:order] || :id
+
+      class_inheritable_accessor :taggable_class
+      self.taggable_class = self
     end
 
     def acts_as_taggable?
