@@ -23,7 +23,6 @@ module SimpleTaggable
       protected
 
         def with_taggable(taggable)
-          p taggable
           where("taggable_id = #{taggable.table_name}.id AND taggable_type = ?", taggable.name)
         end
     end

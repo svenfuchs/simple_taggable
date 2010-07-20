@@ -26,11 +26,11 @@ module SimpleTaggable
     protected
     
       def with_any_tags(tags)
-        scoped & Tagging.with_taggable(self) & Tag.named_like_any_of(tags)
+        scoped & Tagging.with_taggable(self.taggable_class) & Tag.named_like_any_of(tags)
       end
     
       def with_all_tags(tags)
-        where("(#{Tagging.count_tagged(self, tags).to_sql}) = #{tags.size}")
+        where("(#{Tagging.count_tagged(self.taggable_class, tags).to_sql}) = #{tags.size}")
       end
   
       def without_tags(tags)

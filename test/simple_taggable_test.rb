@@ -134,7 +134,7 @@ class SimpleTaggableTest < Test::Unit::TestCase
   test "#tagged with sti" do
     photo = SpecialPhoto.create!(:name => "Foo", :tag_list => "STI")
     assert_equal [photo], SpecialPhoto.tagged("STI")
-    # assert Photo.tagged("STI").map(&:id).include?(photo.id)
+    assert Photo.tagged("STI").map(&:id).include?(photo.id)
   end
   
   test '#save_tags saves new tags' do
