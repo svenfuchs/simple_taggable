@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/test_helper'
 class SimpleTaggableTest < Test::Unit::TestCase
   def setup
     DatabaseCleaner.start
-    load Pathname.local('fixtures.rb')
+    load File.expand_path('../fixtures.rb', __FILE__)
   end
 
   fixtures = {
@@ -72,12 +72,12 @@ class SimpleTaggableTest < Test::Unit::TestCase
   end
 
   # test 'tag_counts on association with options' do
-  #   assert_equal [], @john.posts.tag_counts(:conditions => '1 = 0')
-  #   assert_tag_counts @john.posts.tag_counts(:at_most => 2), :great => 1, :sucks => 1
+  #   assert_equal [], @john.posts.tags.with_counts(:conditions => '1 = 0')
+  #   assert_tag_counts @john.posts.tags.with_counts(:at_most => 2), :great => 1, :sucks => 1
   # end
   #
   # test 'tag_counts on has_many :through' do
-  #   assert_tag_counts @john.magazines.tag_counts, :great => 1
+  #   assert_tag_counts @john.magazines.tags.with_counts789, :great => 1
   # end
 
   test '#tag_list' do

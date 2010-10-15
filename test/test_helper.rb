@@ -5,20 +5,19 @@ require 'test/unit'
 require 'fileutils'
 require 'logger'
 require 'ruby-debug'
+require 'bundler/setup'
 
-require 'pathname_local'
 require 'test_declarative'
 require 'database_cleaner'
-
 require 'active_record'
-require 'rails/log_subscriber'
-require 'active_record/railties/log_subscriber'
+require 'active_record/log_subscriber'
 require 'active_support/core_ext/logger'
 
 log = '/tmp/simple_taggable_test.log'
 FileUtils.touch(log) unless File.exists?(log)
 ActiveRecord::Base.logger = Logger.new(log)
-Rails::LogSubscriber.add(:active_record, ActiveRecord::Railties::LogSubscriber.new)
+ActiveRecord::LogSubscriber.attach_to(:active_record)
+ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => ':memory:')
 
 DatabaseCleaner.strategy = :truncation
 
@@ -52,10 +51,10 @@ class Test::Unit::TestCase
   end
 end
 
-$:.unshift Pathname.local('../lib').to_s
+$:.unshift File.expand_path('../../lib')
 
 require 'simple_taggable'
 include SimpleTaggable
 
-require Pathname.local('models')
-require Pathname.local('helpers/assert_queries')
+require File.expand_path('../models', __FILE__)
+require File.expand_path('../helpers/assert_queries', __FILE__)
