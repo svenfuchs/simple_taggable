@@ -28,13 +28,13 @@ module SimpleTaggable
       end
 
       def at_least(num)
-        group('tags.id, tags.name').having('count(*) >= ?', num)
+        group('tags.id, tags.name').having(['count(*) >= ?', num])
       end
 
       def at_most(num)
-        group('tags.id, tags.name').having('count(*) <= ?', num)
+        group('tags.id, tags.name').having(['count(*) <= ?', num])
       end
-      
+
       protected
 
         def name_matches(name)
